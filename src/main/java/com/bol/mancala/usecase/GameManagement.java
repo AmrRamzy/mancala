@@ -15,5 +15,9 @@ public interface GameManagement {
 
     Game joinGame(String gameId, String playerName);
 
+    Game joinGame(String gameId, String player1Name, String player2Name);
+
     Game saveGame(Game game);
+
+    Game createAndJoinGame(String player1Name, String player2Name);
 }

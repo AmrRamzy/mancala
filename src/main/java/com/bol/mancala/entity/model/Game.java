@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -25,12 +24,9 @@ public class Game {
     private String currentPlayerName;
     private String gameWinnerPlayerName;
 
-    public Game(String playerName) {
+    public Game() {
         this.gameId = UUID.randomUUID().toString();
-        if(this.gameBoardMap == null)
-            this.gameBoardMap = new HashMap();
-        this.gameBoardMap.put(playerName, new GameBoard(playerName));
-
+        this.gameBoardMap = new HashMap<String, GameBoard>();
     }
 
 }

@@ -2,6 +2,7 @@ package com.bol.mancala.usecase;
 
 import com.bol.mancala.adaptor.repository.GameRespository;
 import com.bol.mancala.entity.model.Game;
+import com.bol.mancala.entity.model.GameBoard;
 import com.bol.mancala.entity.model.Player;
 import com.bol.mancala.usecase.exception.GameException;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +31,11 @@ class GameManagementImplImplTest {
         alice.setName("Alice");
         gameRespository = Mockito.mock(GameRespository.class);
         ArrayList gameList = new ArrayList<Game>();
-        gameList.add(new Game("Bob"));
+        Game game = new Game();
+        game.getGameBoardMap().put("Bob", new GameBoard("Bob"));
+        gameList.add(game);
         Mockito.when(gameRespository.findAll()).thenReturn(gameList);
-        Mockito.when(gameRespository.findById("1")).thenReturn(Optional.of(new Game("Bob")));
+        Mockito.when(gameRespository.findById("1")).thenReturn(Optional.of(game));
         //return same object sent to method
         Mockito.when(gameRespository.insert(any(Game.class))).thenAnswer((invocation) ->invocation.getArguments()[0]);
         //return same object sent to method
@@ -78,8 +81,18 @@ class GameManagementImplImplTest {
     }
 
     @Test
+    void joinGame_twoPlayers() {
+        Mockito.when(gameRespository.findById("1")).thenReturn(Optional.of(new Game()));
+        Game game = gameManagement.joinGame("1", "Bob", "Alice");
+        assertEquals(2, game.getGameBoardMap().size());
+        assertTrue(game.getGameBoardMap().containsKey("Alice"));
+        assertTrue(game.isGamePlayable());
+    }
+
+    @Test
     void saveGame() {
-        Game newGame= new Game("Alice");
+        Game newGame= new Game();
+        newGame.getGameBoardMap().put("Alice", new GameBoard("Alice"));
         Game game = gameManagement.saveGame(newGame);
         assertEquals(newGame,game);
     }

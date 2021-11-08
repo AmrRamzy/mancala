@@ -11,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/game")
 @RestController
+@CrossOrigin
 public class GameRestController {
 
     private final GamePlay gamePlay;
@@ -27,13 +28,23 @@ public class GameRestController {
     }
 
     @PostMapping
-    public Game createGame(@RequestParam String playerName){
-        return gameManagement.createGame(playerName);
+    public Game createAndJoinGame(@RequestParam String player1Name, @RequestParam String player2Name){
+        return gameManagement.createAndJoinGame(player1Name, player2Name);
     }
 
+//    @PostMapping
+//    public Game createGame(@RequestParam String playerName){
+//        return gameManagement.createGame(playerName);
+//    }
+
+//    @PatchMapping("/{gameId}")
+//    public Game joinGame(@PathVariable String gameId, @RequestParam String playerName){
+//        return gameManagement.joinGame(gameId, playerName);
+//    }
+
     @PatchMapping("/{gameId}")
-    public Game joinGame(@PathVariable String gameId, @RequestParam String playerName){
-        return gameManagement.joinGame(gameId, playerName);
+    public Game joinGameMultiplePlayers(@PathVariable String gameId, @RequestParam String player1Name, @RequestParam String player2Name){
+        return gameManagement.joinGame(gameId, player1Name, player2Name);
     }
 
     @PatchMapping("/{gameId}/start")

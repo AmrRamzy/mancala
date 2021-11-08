@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 
@@ -26,7 +27,8 @@ class GamePlayImplTest {
     @BeforeEach
     void setUp() {
 
-        game = new Game("Bob");
+        game = new Game();
+        game.getGameBoardMap().put("Bob", new GameBoard("Bob"));
         game.getGameBoardMap().put("Alice",new GameBoard("Alice"));
         bobGameBoard = game.getGameBoardMap().get("Bob");
         aliceGameBoard = game.getGameBoardMap().get("Alice");
@@ -54,11 +56,7 @@ class GamePlayImplTest {
     @Test
     void play_gameNotStarted() {
         Predicate<Player> filterPlayerByNamePredicate = p->"Bob".equals(p.getName());
-        gamePlay.play("1","Bob",3);
-        assertArrayEquals(new int[]{6, 6, 6, 6, 6, 6}, bobGameBoard.getBoard());
-        assertArrayEquals(new int[]{6, 6, 6, 6, 6, 6}, aliceGameBoard.getBoard());
-        assertEquals(0, bobGameBoard.getMancala());
-        assertEquals(0, aliceGameBoard.getMancala());
+        assertThrows(GameException.class,()->gamePlay.play("1","Bob",3));
     }
 
     @Test
