@@ -2,7 +2,6 @@ package com.bol.mancala.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @RequiredArgsConstructor

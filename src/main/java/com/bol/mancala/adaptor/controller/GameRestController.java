@@ -6,6 +6,9 @@ import com.bol.mancala.usecase.GamePlay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,37 +26,22 @@ public class GameRestController {
     }
 
     @GetMapping("/{gameId}")
-    public Game getGame(@PathVariable String gameId){
+    public Game getGame(@PathVariable @NotNull String gameId){
         return gameManagement.loadGame(gameId);
     }
 
     @PostMapping
-    public Game createAndJoinGame(@RequestParam String player1Name, @RequestParam String player2Name){
+    public Game createAndJoinGame(@RequestParam @NotNull String player1Name, @RequestParam @NotNull String player2Name){
         return gameManagement.createAndJoinGame(player1Name, player2Name);
     }
 
-//    @PostMapping
-//    public Game createGame(@RequestParam String playerName){
-//        return gameManagement.createGame(playerName);
-//    }
-
-//    @PatchMapping("/{gameId}")
-//    public Game joinGame(@PathVariable String gameId, @RequestParam String playerName){
-//        return gameManagement.joinGame(gameId, playerName);
-//    }
-
-    @PatchMapping("/{gameId}")
-    public Game joinGameMultiplePlayers(@PathVariable String gameId, @RequestParam String player1Name, @RequestParam String player2Name){
-        return gameManagement.joinGame(gameId, player1Name, player2Name);
-    }
-
     @PatchMapping("/{gameId}/start")
-    public Game startGame(@PathVariable String gameId, @RequestParam String playerName){
+    public Game startGame(@PathVariable @NotNull String gameId, @RequestParam @NotNull String playerName){
         return gamePlay.startGame(gameId, playerName);
     }
 
     @PatchMapping("/{gameId}/play")
-    public Game play(@PathVariable String gameId, @RequestParam String playerName, @RequestParam Integer index){
+    public Game play(@PathVariable @NotNull String gameId, @RequestParam @NotNull String playerName, @RequestParam @NotNull @Min(0) @Max(6) Integer index){
        return gamePlay.play(gameId, playerName, index);
     }
 }

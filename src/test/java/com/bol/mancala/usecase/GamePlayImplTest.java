@@ -2,24 +2,17 @@ package com.bol.mancala.usecase;
 
 import com.bol.mancala.entity.model.Game;
 import com.bol.mancala.entity.model.GameBoard;
-import com.bol.mancala.entity.model.Player;
 import com.bol.mancala.usecase.exception.GameException;
-import com.bol.mancala.usecase.exception.PlayerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.function.Predicate;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 
 class GamePlayImplTest {
 
     private GamePlay gamePlay;
-    private GameManagement gameManagment;
     private GameBoard bobGameBoard;
     private GameBoard aliceGameBoard;
     private Game game;
@@ -32,13 +25,13 @@ class GamePlayImplTest {
         game.getGameBoardMap().put("Alice",new GameBoard("Alice"));
         bobGameBoard = game.getGameBoardMap().get("Bob");
         aliceGameBoard = game.getGameBoardMap().get("Alice");
-        gameManagment = Mockito.mock(GameManagement.class);
-        Mockito.when(gameManagment.createGame(anyString())).thenReturn(game);
-        Mockito.when(gameManagment.loadGame("1")).thenReturn(game);
-        //return same object sent to method
-        Mockito.when(gameManagment.saveGame(any(Game.class))).thenAnswer((invocation) ->invocation.getArguments()[0]);
 
-        gamePlay = new GamePlayImpl(gameManagment);
+        GameManagement gameManagement = Mockito.mock(GameManagement.class);
+        Mockito.when(gameManagement.loadGame("1")).thenReturn(game);
+        //return same object sent to method
+        Mockito.when(gameManagement.saveGame(any(Game.class))).thenAnswer((invocation) ->invocation.getArguments()[0]);
+
+        gamePlay = new GamePlayImpl(gameManagement);
     }
     @Test
     void startGame() {
@@ -55,7 +48,6 @@ class GamePlayImplTest {
 
     @Test
     void play_gameNotStarted() {
-        Predicate<Player> filterPlayerByNamePredicate = p->"Bob".equals(p.getName());
         assertThrows(GameException.class,()->gamePlay.play("1","Bob",3));
     }
 
@@ -122,8 +114,8 @@ class GamePlayImplTest {
         aliceGameBoard.setBoard(new int []{0, 0, 1, 1, 1, 1});
         aliceGameBoard.setMancala(25);
         gamePlay.play("1","Bob",6);
-        assertArrayEquals(new int[]{6, 6, 6, 6, 6, 6}, bobGameBoard.getBoard());
-        assertArrayEquals(new int[]{6, 6, 6, 6, 6, 6}, aliceGameBoard.getBoard());
+        assertArrayEquals(new int[]{0, 0, 0, 0, 0, 0}, bobGameBoard.getBoard());
+        assertArrayEquals(new int[]{0, 0, 0, 0, 0, 0}, aliceGameBoard.getBoard());
         assertEquals(41, bobGameBoard.getMancala());
         assertEquals(31, aliceGameBoard.getMancala());
         assertEquals(bobGameBoard.getPlayerName(), game.getGameWinnerPlayerName());

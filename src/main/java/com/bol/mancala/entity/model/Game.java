@@ -1,13 +1,15 @@
 package com.bol.mancala.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.*;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.HashMap;
+import java.util.UUID;
 @Getter
 @Setter
 @ToString
@@ -26,7 +28,7 @@ public class Game {
 
     public Game() {
         this.gameId = UUID.randomUUID().toString();
-        this.gameBoardMap = new HashMap<String, GameBoard>();
+        this.gameBoardMap = new HashMap<>();
     }
 
 }
