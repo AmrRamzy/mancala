@@ -79,7 +79,6 @@ class GameRestControllerIntegrationTest {
         Mockito.when(gameRespository.findAll()).thenReturn(gameList);
         Mockito.when(gameRespository.save(any(Game.class))).thenAnswer((invocation) -> invocation.getArguments()[0]);
 
-
     }
 
     @Test
