@@ -39,7 +39,6 @@ class GameRestControllerTest {
         Mockito.when(gameManagement.getAllGames()).thenReturn(gameList);
         Mockito.when(gameManagement.createAndJoinGame(anyString(),anyString())).thenReturn(game);
 
-        Mockito.when(gamePlay.startGame(anyString(), anyString())).thenReturn(game);
         Mockito.when(gamePlay.play(anyString(), anyString(),anyInt())).thenReturn(game);
 
     }
@@ -59,12 +58,6 @@ class GameRestControllerTest {
     @Test
     void createAndJoinGame() {
         Game game = gameRestController.createAndJoinGame("Bob","Alice");
-        assertNotNull(game);
-    }
-
-    @Test
-    void startGame() {
-        Game game = gameRestController.startGame("1234","Bob");
         assertNotNull(game);
     }
 

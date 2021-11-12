@@ -104,17 +104,6 @@ class GameRestControllerIntegrationTest {
     }
 
     @Test
-    void startGame() throws Exception {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("playerName", alice);
-        mockMvc.perform(patch(STORE_BASE_URL + "/" + STORE_ID + "/start").queryParams(params)).andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.gameInProgress").value(true))
-                .andExpect(jsonPath("$.currentPlayerName").value(alice));
-
-    }
-
-    @Test
     void play() throws Exception {
 
         String playResponse = createResponseJson();

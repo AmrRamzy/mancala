@@ -33,12 +33,6 @@ class GamePlayImplTest {
 
         gamePlay = new GamePlayImpl(gameManagement);
     }
-    @Test
-    void startGame() {
-        game.setGamePlayable(true);
-        gamePlay.startGame("1","Bob");
-        assertTrue(game.isGameInProgress());
-    }
 
     @Test
     void play_playerNotFound() {
