@@ -20,7 +20,7 @@ public class ErrorHandlingControllerAdvice {
 	@ResponseBody
 	ValidationErrorResponse handleGameException(GameException e) {
 
-		return new ValidationErrorResponse("Game Error", e.getMessage());
+		return new ValidationErrorResponse("Game Exception", e.getMessage());
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)

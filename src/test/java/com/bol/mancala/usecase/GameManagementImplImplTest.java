@@ -19,13 +19,15 @@ class GameManagementImplImplTest {
 
     private GameRespository gameRespository;
     private GameManagement gameManagement;
+    private GameBoard bobGameBoard;
 
     @BeforeEach
     void setUp() {
         gameRespository = Mockito.mock(GameRespository.class);
         ArrayList<Game> gameList = new ArrayList<>();
         Game game = new Game();
-        game.getGameBoardMap().put("Bob", new GameBoard("Bob"));
+        bobGameBoard = new GameBoard("Bob");
+        game.getGameBoardList().add(bobGameBoard);
         gameList.add(game);
         Mockito.when(gameRespository.findAll()).thenReturn(gameList);
         Mockito.when(gameRespository.findById("1")).thenReturn(Optional.of(game));
@@ -41,7 +43,7 @@ class GameManagementImplImplTest {
     @Test
     void getAllGames() {
         List<Game> gameList = gameManagement.getAllGames();
-        assertTrue(gameList.get(0).getGameBoardMap().containsKey("Bob"));
+        assertTrue(gameList.get(0).getGameBoardList().stream().anyMatch(gb -> gb.getPlayerName().equals(bobGameBoard.getPlayerName())));
     }
 
     @Test
@@ -52,23 +54,25 @@ class GameManagementImplImplTest {
 
     @Test
     void loadGame_gameNotFound() {
-        assertThrows(GameException.class,()->gameManagement.loadGame("wrong ID"));
+        assertThrows(GameException.class,()->gameManagement.loadGame("wrong ID"), "Game not found");
     }
 
     @Test
     void createAndJoinGame() {
         Mockito.when(gameRespository.findById("1")).thenReturn(Optional.of(new Game()));
-        Game game = gameManagement.createAndJoinGame("Bob", "Alice");
-        assertEquals(2, game.getGameBoardMap().size());
-        assertTrue(game.getGameBoardMap().containsKey("Bob"));
-        assertTrue(game.getGameBoardMap().containsKey("Alice"));
-        assertTrue(game.isGamePlayable());
+        String bob = "Bob";
+        String alice = "Alice";
+        Game game = gameManagement.createAndJoinGame(bob, alice);
+        assertEquals(2, game.getGameBoardList().size());
+        assertTrue(game.getGameBoardList().stream().anyMatch(gb -> gb.getPlayerName().equals(bob)));
+        assertTrue(game.getGameBoardList().stream().anyMatch(gb -> gb.getPlayerName().equals(alice)));
+        assertEquals(Game.GameStatus.IN_PROGRESS, game.getGameStatus());
     }
 
     @Test
     void saveGame() {
         Game newGame= new Game();
-        newGame.getGameBoardMap().put("Alice", new GameBoard("Alice"));
+        newGame.getGameBoardList().add(new GameBoard("Alice"));
         Game game = gameManagement.saveGame(newGame);
         assertEquals(newGame,game);
     }

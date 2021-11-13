@@ -1,19 +1,18 @@
 package com.bol.mancala.adaptor.controller.exception;
 
+import com.bol.mancala.usecase.exception.GameException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ErrorHandlingControllerAdviceTest {
 
@@ -24,10 +23,21 @@ class ErrorHandlingControllerAdviceTest {
         errorHandlingControllerAdvice = new ErrorHandlingControllerAdvice();
     }
 
+
+    @Test
+    @DisplayName("test exception ConstraintViolationException handling")
+    void testHandleGameException() {
+        String message = "Game Exception";
+        GameException e = new GameException(message);
+        ValidationErrorResponse validationErrorResponse = errorHandlingControllerAdvice
+                .handleGameException(e);
+        assertEquals(message, validationErrorResponse.getMessage());
+    }
+
     @Test
     @DisplayName("test exception ConstraintViolationException handling")
     void testHandleConstraintViolationException() {
-        Set<? extends ConstraintViolation<?>> constraintViolations = new HashSet<ConstraintViolation<?>>();
+        Set<? extends ConstraintViolation<?>> constraintViolations = new HashSet<>();
         String message = "validation message";
         ConstraintViolationException e = new ConstraintViolationException(message, constraintViolations);
         ValidationErrorResponse validationErrorResponse = errorHandlingControllerAdvice

@@ -8,8 +8,9 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.UUID;
+
 @Getter
 @Setter
 @ToString
@@ -20,15 +21,28 @@ public class Game {
 
     @Id
     private String gameId;
-    private HashMap<String, GameBoard> gameBoardMap;
-    private boolean isGamePlayable;
-    private boolean isGameInProgress;
+    private ArrayList<GameBoard> gameBoardList;
+    private GameStatus gameStatus;
     private String currentPlayerName;
     private String gameWinnerPlayerName;
-
+    private LastMoveStatus lastMoveStatus;
     public Game() {
         this.gameId = UUID.randomUUID().toString();
-        this.gameBoardMap = new HashMap<>();
+        this.gameBoardList = new ArrayList<>();
+        this.gameStatus = GameStatus.INITIALIZED;
+    }
+
+    public enum GameStatus {
+        INITIALIZED,
+        PLAYABLE,
+        IN_PROGRESS,
+        GAME_OVER
+    }
+
+    public enum LastMoveStatus {
+        OTHER_BOARD,
+        CURRENT_BOARD,
+        MANCALA
     }
 
 }
