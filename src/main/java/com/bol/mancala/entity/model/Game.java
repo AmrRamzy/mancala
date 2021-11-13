@@ -30,6 +30,7 @@ public class Game {
         this.gameId = UUID.randomUUID().toString();
         this.gameBoardList = new ArrayList<>();
         this.gameStatus = GameStatus.INITIALIZED;
+        this.lastMoveStatus = LastMoveStatus.INITIALIZED;
     }
 
     public enum GameStatus {
@@ -40,6 +41,7 @@ public class Game {
     }
 
     public enum LastMoveStatus {
+        INITIALIZED,
         OTHER_BOARD,
         CURRENT_BOARD,
         MANCALA

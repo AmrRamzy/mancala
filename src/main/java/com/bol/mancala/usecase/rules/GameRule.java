@@ -1,9 +1,9 @@
 package com.bol.mancala.usecase.rules;
 
-import com.bol.mancala.entity.model.Game;
-import com.bol.mancala.entity.model.GameBoard;
+import com.bol.mancala.entity.dto.GameRuleDto;
 
 public interface GameRule {
-    void apply(Game game, GameBoard currentPlayerGameBoard, Integer finalIndex);
+    void apply(GameRuleDto gameRuleDto);
+
     Integer getPriority();
 }

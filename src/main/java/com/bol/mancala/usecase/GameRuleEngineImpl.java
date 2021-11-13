@@ -1,7 +1,6 @@
 package com.bol.mancala.usecase;
 
-import com.bol.mancala.entity.model.Game;
-import com.bol.mancala.entity.model.GameBoard;
+import com.bol.mancala.entity.dto.GameRuleDto;
 import com.bol.mancala.usecase.rules.*;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,8 @@ public class GameRuleEngineImpl implements GameRuleEngine {
     }
 
     @Override
-    public void applyGameRules(Game game, GameBoard currentPlayerGameBoard, Integer finalIndex) {
+    public void applyGameRules(GameRuleDto gameRuleDto) {
 
-        rulesQueue.forEach(r -> r.apply(game, currentPlayerGameBoard, finalIndex));
+        rulesQueue.forEach(r -> r.apply(gameRuleDto));
     }
 }

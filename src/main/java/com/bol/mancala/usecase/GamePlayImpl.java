@@ -1,5 +1,6 @@
 package com.bol.mancala.usecase;
 
+import com.bol.mancala.entity.dto.GameRuleDto;
 import com.bol.mancala.entity.model.Game;
 import com.bol.mancala.entity.model.GameBoard;
 import com.bol.mancala.usecase.exception.GameException;
@@ -34,7 +35,7 @@ public class GamePlayImpl implements GamePlay {
                 int lastStoneMovedIndex = moveStones(game, currentPlayerGameBoard, currentIndex);
                 GameBoard nextPlayerBoard = GameUtil.getNextPlayerBoard(game, currentPlayerGameBoard);
                 game.setCurrentPlayerName(nextPlayerBoard.getPlayerName());
-                gameRuleEngine.applyGameRules(game, currentPlayerGameBoard, lastStoneMovedIndex);
+                gameRuleEngine.applyGameRules(new GameRuleDto(game, currentPlayerGameBoard, lastStoneMovedIndex));
             }
         } else {
             throw new GameException("game was not started.");
@@ -56,6 +57,7 @@ public class GamePlayImpl implements GamePlay {
                     nextGameBoard.setMancala(nextGameBoard.getMancala() + 1);
                     currentPlayerBoard[stonesToMoveIndex] = currentPlayerBoard[stonesToMoveIndex] - 1;
                     game.setLastMoveStatus(Game.LastMoveStatus.MANCALA);
+                    lastStoneMovedIndex=0;
                 }
             }
 
@@ -71,12 +73,8 @@ public class GamePlayImpl implements GamePlay {
             currentPlayerBoard.getBoard()[stonesToMoveIndex] = currentPlayerBoard.getBoard()[stonesToMoveIndex] - 1;
             lastStoneMovedIndex++;
         }
-        if (lastStoneMovedIndex == boardToMoveStonesIn.getBoard().length)
-            lastStoneMovedIndex = 0;
-        else
-            lastStoneMovedIndex--;
 
-        return lastStoneMovedIndex;
+        return --lastStoneMovedIndex;
     }
 
 

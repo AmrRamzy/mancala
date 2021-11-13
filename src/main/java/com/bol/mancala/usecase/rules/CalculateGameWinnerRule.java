@@ -1,5 +1,6 @@
 package com.bol.mancala.usecase.rules;
 
+import com.bol.mancala.entity.dto.GameRuleDto;
 import com.bol.mancala.entity.model.Game;
 import com.bol.mancala.entity.model.GameBoard;
 import org.slf4j.Logger;
@@ -13,8 +14,13 @@ public class CalculateGameWinnerRule implements GameRule {
     private static final Logger log = LoggerFactory.getLogger(CalculateGameWinnerRule.class);
 
     @Override
-    public void apply(Game game, GameBoard currentPlayerGameBoard, Integer finalIndex) {
-        log.info("execute rule for Player : {} in Game : {}", game.getCurrentPlayerName(), game.getGameId());
+    public void apply(GameRuleDto gameRuleDto) {
+        log.info("execute rule for gameRuleDto : {}", gameRuleDto);
+
+        if(gameRuleDto==null || gameRuleDto.getGame()==null)
+            return ;
+
+        Game game = gameRuleDto.getGame();
         if (game.getGameStatus().equals(Game.GameStatus.GAME_OVER)) {
             GameBoard winnerPlayerGameBoard = game.getGameBoardList()
                     .stream()

@@ -119,6 +119,7 @@ class GameRestControllerIntegrationTest {
         Game responseGame = new Game();
         responseGame.setGameId(game.getGameId());
         responseGame.setGameStatus(Game.GameStatus.IN_PROGRESS);
+        responseGame.setLastMoveStatus(Game.LastMoveStatus.OTHER_BOARD);
         responseGame.setCurrentPlayerName(bob);
         responseGame.getGameBoardList().add(bobBoardResponse);
         responseGame.getGameBoardList().add(aliceBoardResponse);
@@ -147,6 +148,7 @@ class GameRestControllerIntegrationTest {
         Game responseGame = new Game();
         responseGame.setGameId(game.getGameId());
         responseGame.setGameStatus(Game.GameStatus.IN_PROGRESS);
+        responseGame.setLastMoveStatus(Game.LastMoveStatus.CURRENT_BOARD);
         responseGame.setCurrentPlayerName(alice);
         responseGame.getGameBoardList().add(bobBoardResponse);
         responseGame.getGameBoardList().add(aliceBoardResponse);
@@ -168,6 +170,39 @@ class GameRestControllerIntegrationTest {
     }
 
     @Test
+    void play_collectOpponentStones_lastPit() throws Exception {
+
+        //set response
+        GameBoard bobBoardResponse = new GameBoard(bob);
+        bobBoardResponse.setBoard(new int[]{6, 6, 6, 3, 0, 0});
+        bobBoardResponse.setMancala(8);
+        GameBoard aliceBoardResponse = new GameBoard(alice);
+        aliceBoardResponse.setBoard(new int[]{0, 6, 6, 6, 6, 6});
+        Game responseGame = new Game();
+        responseGame.setGameId(game.getGameId());
+        responseGame.setGameStatus(Game.GameStatus.IN_PROGRESS);
+        responseGame.setLastMoveStatus(Game.LastMoveStatus.CURRENT_BOARD);
+        responseGame.setCurrentPlayerName(alice);
+        responseGame.getGameBoardList().add(bobBoardResponse);
+        responseGame.getGameBoardList().add(aliceBoardResponse);
+        String playResponse = createResponseJson(responseGame);
+
+        bobBoard.setBoard(new int[]{6, 6, 6, 3, 1, 0});
+        bobBoard.setMancala(0);
+        aliceBoard.setBoard(new int[]{7, 6, 6, 6, 6, 6});
+        game.setGameStatus(Game.GameStatus.IN_PROGRESS);
+        game.setCurrentPlayerName(bob);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("playerName", bob);
+        params.add("index", "5");
+
+        mockMvc.perform(patch(STORE_BASE_URL + "/" + STORE_ID + "/play").queryParams(params)).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(playResponse));
+
+    }
+
+    @Test
     void play_lastStoneInMancala() throws Exception {
 
         //set response
@@ -179,6 +214,7 @@ class GameRestControllerIntegrationTest {
         Game responseGame = new Game();
         responseGame.setGameId(game.getGameId());
         responseGame.setGameStatus(Game.GameStatus.IN_PROGRESS);
+        responseGame.setLastMoveStatus(Game.LastMoveStatus.MANCALA);
         responseGame.setCurrentPlayerName(bob);
         responseGame.getGameBoardList().add(bobBoardResponse);
         responseGame.getGameBoardList().add(aliceBoardResponse);

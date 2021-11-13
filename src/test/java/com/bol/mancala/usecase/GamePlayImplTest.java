@@ -32,7 +32,6 @@ class GamePlayImplTest {
         Mockito.when(gameManagement.saveGame(any(Game.class))).thenAnswer((invocation) ->invocation.getArguments()[0]);
 
         gamePlay = new GamePlayImpl(gameManagement, new GameRuleEngineImpl());
-//        gamePlay = new GamePlayImpl(gameManagement);
     }
 
     @Test
