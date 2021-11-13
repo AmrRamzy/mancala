@@ -103,7 +103,7 @@ class GameRestControllerIntegrationTest {
         params.add("player1Name", alice);
         params.add("player2Name", bob);
         mockMvc.perform(post(STORE_BASE_URL).queryParams(params)).andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.currentPlayerName").value(alice));
     }
 

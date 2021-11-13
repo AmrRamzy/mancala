@@ -31,7 +31,8 @@ public class GamePlayImpl implements GamePlay {
                     .findFirst()
                     .orElseThrow(() -> new GameException("Player did not join game"));
 
-            if (game.getCurrentPlayerName().equals(currentPlayerGameBoard.getPlayerName())) {
+            if (game.getCurrentPlayerName().equals(currentPlayerGameBoard.getPlayerName())
+                    && currentPlayerGameBoard.getBoard()[currentIndex-1] > 0) {
                 int lastStoneMovedIndex = moveStones(game, currentPlayerGameBoard, currentIndex);
                 GameBoard nextPlayerBoard = GameUtil.getNextPlayerBoard(game, currentPlayerGameBoard);
                 game.setCurrentPlayerName(nextPlayerBoard.getPlayerName());
@@ -57,7 +58,7 @@ public class GamePlayImpl implements GamePlay {
                     nextGameBoard.setMancala(nextGameBoard.getMancala() + 1);
                     currentPlayerBoard[stonesToMoveIndex] = currentPlayerBoard[stonesToMoveIndex] - 1;
                     game.setLastMoveStatus(Game.LastMoveStatus.MANCALA);
-                    lastStoneMovedIndex=0;
+                    lastStoneMovedIndex = 0;
                 }
             }
 

@@ -6,7 +6,7 @@ services:
     ports:
       - 8989:8989
     environment:
-      - STORE_LOCATOR_JASYPT_ENCRYPTOR_PASSWORD=DB-secret
+      - DB_JASYPT_ENCRYPTOR_PASSWORD=DB-secret
 
   store-locator-ui:
     image: amrkramzy/bol-mancala-ui-demo
