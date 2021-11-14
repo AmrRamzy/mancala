@@ -238,7 +238,7 @@ For full APIs documentation please check [Documentation section](#documents)
 * 	[Postman Collection APIs](https://documenter.getpostman.com/view/13659214/UVC8DRzy) - `https://documenter.getpostman.com/view/13659214/UVC8DRzy`- Documentation & Testing
 * 	[Swagger](http://localhost:8989/bol/swagger-ui/#/game-rest-controller) - `http://localhost:8989/bol/swagger-ui/#/game-rest-controller`- Documentation & Testing 
 * 	[Swagger](http://localhost:8989/bol/v2/api-docs) - `http://localhost:8989/bol/v2/api-docs`- Documentation & Testing
-*	Find Java Doc in **doc** folder
+*	Find Java Docs in **docs** folder
 
 
 

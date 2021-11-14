@@ -1,0 +1,11 @@
+com.bol.mancala
+com.bol.mancala.adaptor.controller
+com.bol.mancala.adaptor.controller.exception
+com.bol.mancala.adaptor.repository
+com.bol.mancala.configuration
+com.bol.mancala.entity.dto
+com.bol.mancala.entity.model
+com.bol.mancala.usecase
+com.bol.mancala.usecase.exception
+com.bol.mancala.usecase.rules
+com.bol.mancala.usecase.util
