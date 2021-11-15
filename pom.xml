@@ -24,7 +24,9 @@
 		<sonar.language>java</sonar.language>
 		<sonar.coverage.exclusions>
 			**/entity/**/*,
-			**/configuration/**/*
+			**/configuration/**/*,
+			**/adaptor/controller/exception/ValidationErrorResponse.class,
+			**/usecase/exception/GameException.class
 		</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
@@ -122,6 +124,8 @@
 					<excludes>
 						<exclude>**/entity/**/*</exclude>
 						<exclude>**/configuration/**/*</exclude>
+						<exclude>**/adaptor/controller/exception/ValidationErrorResponse.class</exclude>
+						<exclude>**/usecase/exception/GameException.class</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
