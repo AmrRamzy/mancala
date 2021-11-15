@@ -22,6 +22,10 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
+		<sonar.coverage.exclusions>
+			**/entity/**/*,
+			**/configuration/**/*
+		</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -116,8 +120,8 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<exclude>**/entity/**</exclude>
-						<exclude>**/configuration/**</exclude>
+						<exclude>**/entity/**/*</exclude>
+						<exclude>**/configuration/**/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
