@@ -116,8 +116,8 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<exclude>com/bol/mancala/entity/**</exclude>
-						<exclude>com/bol/mancala/configuration/**</exclude>
+						<exclude>**/entity/**</exclude>
+						<exclude>**/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
