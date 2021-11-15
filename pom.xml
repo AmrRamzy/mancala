@@ -22,12 +22,7 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
-		<sonar.coverage.exclusions>
-			**/entity/**/*,
-			**/configuration/**/*,
-			**/adaptor/controller/exception/ValidationErrorResponse.class,
-			**/usecase/exception/GameException.class
-		</sonar.coverage.exclusions>
+
 	</properties>
 	<dependencies>
 		<dependency>
